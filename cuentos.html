@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cuentos Desbloqueados</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Comic+Neue&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+  <script src="gsap-index.js" defer></script>
+  <style>
+    .post-card.locked {
+      filter: grayscale(100%);
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    .post-card.unlocked {
+      filter: none;
+      pointer-events: auto;
+      opacity: 1;
+      transition: transform 0.3s ease;
+    }
+
+    .post-card.unlocked:hover {
+      transform: scale(1.02);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="universo"></canvas>
+
+  <header>
+    <h1 id="titulo-arcoiris">Blog de Aventuras y Cuentos</h1>
+  </header>
+
+  <main class="contenedor">
+    <section id="cuentos">
+      <h2>Cuentos Mágicos</h2>
+      <div class="cards-container">
+        <!-- Cuento 0 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/lamagia.png" alt="Niños leyendo cuentos">
+              <h3>La magia de leer en familia</h3>
+            </div>
+            <div class="card-back">
+              <p>Leer juntos fortalece la imaginación y los lazos familiares. ¡Descubre cómo hacerlo especial cada noche!</p>
+              <a href="#" class="leer-mas" target="_blank">Leer más</a>
+            </div>
+          </div>
+        </div>
+        <!-- Cuento 1 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/dalmatascarro.png" alt="Milley y amigos viajando en camioneta">
+              <h3>Capítulo 1: El viaje en camioneta</h3>
+            </div>
+            <div class="card-back">
+              <p>Únete a Milley, Siul, Jota y Papá Perico en su emocionante viaje a la nueva ciudad de Dálmatópolis en una camioneta azul.</p>
+             <a href="#" class="leer-mas" target="_blank">Leer más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuento 2 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/kikirikik.jpg" alt="Casa nueva de los Dálmatas">
+              <h3>Capítulo 2: ¡Kikirikí! El gallo que despierta a todos</h3>
+            </div>
+            <div class="card-back">
+              <p>Conoce al gallo más madrugador del vecindario y cómo su canto cambia las mañanas de la familia Dálmatas, ¡especialmente asustando a Siul!</p>
+               <a href="#" class="leer-mas" target="_blank">Leer más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuento 3 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/PERRITOSEN EL COLE.jpg" alt="Siul en el colegio">
+              <h3>Capítulo 3: ¡El primer día de colegio!</h3>
+            </div>
+            <div class="card-back">
+              <p>Acompaña a Siul en su primera gran aventura: su primer día en la escuela y sus nuevos amigos como Chispas, Luna y Risas.</p>
+              <a href="#" class="leer-mas" target="_blank">Leer más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuento 4 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/LLAVE.jpg" alt="Llave perdida">
+              <h3>Capítulo 4: ¡La llave perdida y la escalera de bomberos!</h3>
+            </div>
+            <div class="card-back">
+              <p>¡Ayuda! ¡Se nos olvidó la llave! Una situación que se convierte en una gran aventura con los bomberos y su escalera gigante.</p>
+               <a href="#" class="leer-mas">Leer más</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cuento 5 -->
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/tios.jpg" alt="Visita familiar">
+              <h3>Capítulo 5: ¡Visita familiar! Tío Pipas y Tía Liss</h3>
+            </div>
+            <div class="card-back">
+              <p>Recibe con alegría a los coloridos tíos Pipas y Liss, quienes traen regalos especiales y llenan la casa de risas y deliciosas galletas.</p>
+               <a href="#" class="leer-mas">Leer más</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const cuentoIndex = parseInt(params.get('cuento'));
+
+    const cards = document.querySelectorAll('.post-card');
+    cards.forEach((card, i) => {
+      if (i === cuentoIndex) {
+        card.classList.add('unlocked');
+      } else {
+        card.classList.add('locked');
+        // Desactiva los enlaces
+        const link = card.querySelector('a.leer-mas');
+        if (link) link.removeAttribute('href');
+      }
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

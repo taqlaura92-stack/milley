@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pokémon Populares</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="pagina-compra">
+  <canvas id="universo"></canvas>
+  
+  <header>
+    <h1><span id="titulo-arcoiris">Pokémon Populares</span></h1>
+  </header>
+
+  <div id="navbar-container"></div>
+
+  <div class="contenedor-principal">
+    <div class="seccion-catalogo">
+      <h2>¡Encuentra a tu compañero Pokémon!</h2>
+      <div class="search-container">
+        <input type="text" id="pokemon-search-input" placeholder="Buscar por nombre o tipo...">
+      </div>
+      <div id="pokemon-list" class="cards-container"></div>
+    </div>
+
+    <aside id="carrito">
+      <h2><i class="fas fa-shopping-cart"></i> Tu Carrito</h2>
+      <ul id="lista-carrito"></ul>
+      <p id="total-container">Total: <span id="total">0.00</span> $ </p>
+      <button id="vaciar-carrito" class="btn-action"><i class="fas fa-trash"></i> Vaciar</button>
+      <button id="comprar-btn" class="btn-action"><i class="fas fa-credit-card"></i> Comprar</button>
+    </aside>
+  </div>
+
+  <div id="pokemon-detail-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn">&times;</span>
+      <div id="modal-body-content"></div>
+    </div>
+  </div>
+  
+  <div id="footer-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>

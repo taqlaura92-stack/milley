@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Recetas Mágicas de Milley</title>
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="styles.css" />
+   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="gsap-index.js" defer></script>
+  
+  <!-- Font Awesome para íconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="pagina-recetas">
+  <!-- Fondo animado -->
+  <canvas id="universo"></canvas>
+
+  <!-- Encabezado con efecto arcoíris -->
+  <header>
+    <h1 id="titulo-arcoiris">Contáctanos para crear magia personalizada</h1>
+  </header>
+
+  <!-- Navbar dinámico -->
+  <div id="navbar-container"></div>
+
+  
+  <!-- Sección de comentarios -->
+  <section id="blog-comments">
+    <h2>✨ Deja tu Comentario Mágico ✨</h2>
+
+    <!-- Formulario -->
+    <form id="comment-form">
+      <div class="form-group">
+        <label for="comment-name">Tu nombre:</label>
+        <input type="text" id="comment-name" name="name" required placeholder="Ej: Milley, Tío Pipas...">
+      </div>
+
+      <div class="form-group">
+        <label for="comment-description">¿Qué cuento quieres contar?</label>
+        <textarea 
+          id="comment-description" 
+          name="description" 
+          rows="4" 
+          required 
+          placeholder="¡Cuéntanos tu aventura con los dálmatas, el carro mágico o tu familia!"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="comment-image-url">Imagen (opcional):</label>
+        <input 
+          type="url" 
+          id="comment-image-url" 
+          name="image-url" 
+          placeholder="https://ejemplo.com/imagen.jpg">
+      </div>
+
+      <button type="submit" class="submit-button">
+        🌟 Publicar Comentario
+      </button>
+    </form>
+
+    <!-- Cuadrícula de comentarios -->
+    <div id="comments-grid">
+      <!-- Aquí se generarán los comentarios con JavaScript -->
+    </div>
+  </section>
+
+  <h2>Contactarnos para crear magia personalizada</h2>
+  <main class="contenedor">
+    <div class="contacto-wrapper">
+      <div class="contacto-formulario">
+    <form action="https://formspree.io/f/xblaywlz" method="POST" id="formularioContacto">
+        <div class="campo">
+            <label for="nombre">Tu nombre</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Ej. Carla Gómez" />
+            <span class="error" id="errorNombre"></span>
+        </div>
+
+        <div class="campo">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" required placeholder="Ej. carla@email.com" />
+            <span class="error" id="errorEmail"></span>
+        </div>
+
+        <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="Ej. +56912345678" />
+            <span class="error" id="errorTelefono"></span>
+        </div>
+
+        <div class="campo">
+            <label for="edad">Edad del niño/a</label>
+            <input type="number" id="edad" name="edad" min="1" max="12" required placeholder="Ej. 5" />
+            <span class="error" id="errorEdad"></span>
+        </div>
+
+        <div class="campo">
+            <label for="gustos">Preferencias del niño/a</label>
+            <textarea id="gustos" name="gustos" rows="3" required placeholder="Ej. Dinosaurios, magia, astronautas..."></textarea>
+            <span class="error" id="errorGustos"></span>
+        </div>
+
+        <div class="campo">
+            <label for="mensaje">Mensaje adicional (opcional)</label>
+            <textarea id="mensaje" name="mensaje" rows="4" placeholder="¿Hay algo más que deberíamos saber?"></textarea>
+        </div>
+
+        <button type="submit">Enviar mensaje mágico</button>
+    </form>
+</div>
+     
+      <!-- Columna Derecha: Información y Mapa -->
+      <div class="contacto-info">
+         <h2>Encuéntranos</h2>
+        <p>Estamos aquí para hacer realidad los sueños de tu pequeño. ¡Visítanos o escríbenos!</p>
+
+        <ul>
+          <li>
+            <i>📍</i> <!-- Puedes usar Font Awesome: <i class="fas fa-map-marker-alt"></i> -->
+            <span><strong>Dirección:</strong>  Calle Andador Pescara Zaragoza</span>
+          </li>
+          <li>
+            <i>📞</i> <!-- Puedes usar Font Awesome: <i class="fas fa-phone"></i> -->
+            <span><strong>Teléfono:</strong> +123 456 7890</span>
+          </li>
+          <li>
+            <i>✉️</i> <!-- Puedes usar Font Awesome: <i class="fas fa-envelope"></i> -->
+            <span><strong>Email:</strong> info@milleyysusamigos.com</span>
+          </li>
+          <li>
+            <i>🕒</i> <!-- Puedes usar Font Awesome: <i class="fas fa-clock"></i> -->
+            <span><strong>Horario:</strong> Lunes a Viernes, 9:00 AM - 6:00 PM</span>
+          </li>
+        </ul>
+
+        <!-- Contenedor del Mapa -->
+        <div class="mapa-container">
+          <!-- Mapa apuntando a una ubicación aproximada de Andador Pescara, Zaragoza -->
+          <!-- *** IMPORTANTE: Reemplaza este iframe con el código de TU ubicación específica de Google Maps *** -->
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d23978.29149099999!2d-0.89094565!3d41.65229035!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd5914e543e529b1%3A0x5a5a5a5a5a5a5a5a!2sAndador%20Pescara%2C%20Zaragoza!5e0!3m2!1ses!2ses!4v1701000000000!5m2!1ses!2ses"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+</body>
+</html>

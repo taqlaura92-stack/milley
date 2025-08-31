@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rompecabezas Visual</title>
+  <link rel="stylesheet" href="style.css"/>
+
+   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="gsap-index.js" defer></script>
+</head>
+<body class="pagina-block">
+
+  <header>
+   <div class="watermark-container">
+      <h1 id="titulo-arcoiris">Blog de aventuras y cuentos</h1>
+      <img src="img/LogoVerdad.png" alt="Marca de agua" class="watermark" id="watermark" width="15%">
+    </div>
+  </header>
+  </header>
+  <canvas id="universo"></canvas>
+<div id="navbar-container"></div>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <ul>
+      <li><a href="#juegos">Juegos</a></li>
+      <li><a href="#cuentos">Cuentos</a></li>
+      <li><a href="#canciones">Canciones</a></li>
+      <li><a href="#videos">Videos</a></li>
+    </ul>
+  </nav>
+<div class="contenedor-blog">
+<section class="juegos">
+  <div class="section" id="juegos">
+    <h2>Puzles Mágicos de Dálmatas</h2>
+    <div class="gallery" id="gallery"></div>
+        <h3 id="titulo-arcoiris">Selecciona una Imagen</h3>
+  </div>
+
+  <div class="section">
+    <h2>Resuelve el Puzzle</h2>
+    <div class="puzzle-board" id="board"></div>
+  </div>
+</section>
+  <div class="section">
+    <h2>Cuentos Mágicos</h2>
+    <div class="progress-bar"><div class="progress" id="progress"></div></div>
+    <div class="stats-container">
+      <div class="stats-box"><span id="unlockedCount">0</span><br>Completados</div>
+      <div class="stats-box"><span id="totalCount">0</span><br>Total</div>
+    </div>
+    <div class="cuento-container" id="cuentos"></div>
+  </div>
+
+    <!-- Sección de Canciones -->
+    <section id="canciones">
+      <h2>Canciones Infantiles</h2>
+      <div class="cards-container">
+
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/dalmapolislo.png" alt="Canción de la alegría"> 
+              <h3>La canción de la alegría</h3>
+            </div>
+            <div class="card-back">
+              <p>Una melodía alegre que celebra la felicidad de vivir aventuras con amigos y familia.</p>
+              <a href="img/e05ee8c2-9a0d-4ea0-b9b0-a241194f043d.png" class="leer-mas" >Escuchar</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="post-card">
+          <div class="card-inner">
+            <div class="card-front">
+              <img src="img/alegria.png" alt="Canción del sueño">
+              <h3>La nana de Milley</h3>
+            </div>
+            <div class="card-back">
+              <p>Una suave canción de cuna para ayudar a los pequeños a conciliar el sueño con dulces sueños.</p>
+              <a href="img/UNA FRESA.mp4" class="leer-mas">Escuchar</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Sección de Videos - Tarjetas sin parte trasera -->
+       <!-- Sección de Videos - Tarjetas modificadas para NO girar -->
+    <section id="videos">
+      <h2>Videos Animados</h2>
+      <div class="cards-container">
+
+        <!-- Tarjeta de Video 1 - NO gira -->
+        <div class="video-card"> <!-- Cambié post-card por video-card -->
+          <div class="card-inner"> <!-- Mantengo card-inner por consistencia de estilo -->
+            <div class="card-front"> <!-- Solo hay card-front -->
+              <div class="video-container">
+                <iframe width="100%" height="400" src="https://www.youtube.com/embed/UdtPra5AYns" title="MUSICA DEL ALFABETO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+              </div>
+              <h3>Los perritasticos de dalmapolis</h3>
+            </div>
+            <!-- Eliminada la card-back -->
+          </div>
+        </div>
+        <!-- Fin Tarjeta de Video 1 -->
+
+    </section>
+ 
+</div>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-container"></div>
+ <script src="script.js"></script>
+
+</body>
+</html>

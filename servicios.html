@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios Carrusel 3D + Flip Card + Modal</title>
+   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+
+    :root { /* Declara variables globales que pueden ser usadas en todos los archivos. Afecta a todos los archivos HTML. */
+  --primary: #b39ddb; /* Define el color primario. Afecta a todos los archivos HTML. */
+  --secondary: #f8bbd0; /* Define el color secundario. Afecta a todos los archivos HTML. */
+  --accent: #80deea; /* Define el color de acento. Afecta a todos los archivos HTML. */
+  --light-bg: #fffefb; /* Define el color de fondo claro. Afecta a `body` y `main` en `index.html`, `blog.html`, `about.html`, `puzzle.html`, `servicios.html` y `contacto.html`. */
+  --dark-text: #424242; /* Define el color de texto oscuro. Afecta a todos los archivos HTML con texto principal. */
+  --purple-light: #ede7f6; /* Define un color púrpura claro. Afecta a `.team-member`, `.contacto-wrapper` en `contacto.html`, y los botones de voto en `index.html`. */
+  --pink-light: #fce4ec; /* Define un color rosa claro. Afecta a los enlaces del navbar al pasar el mouse. */
+  --blue-light: #e1f5fe; /* Define un color azul claro. No se usa directamente en los archivos proporcionados. */
+  --shadow-light: rgba(0, 0, 0, 0.08); /* Define una sombra ligera. Se utiliza en el input de búsqueda de `pokecomp.html`. */
+  --footer-bg: #7e57c2; /* Define el color de fondo del pie de página. Afecta a `footer.html` y al navbar. */
+  --footer-text-color: #ffffff; /* Define el color del texto del pie de página. Afecta a `footer.html` y al navbar. */
+  --footer-link-color: #f8bbd0; /* Define el color de los enlaces del pie de página. Afecta a `footer.html`. */
+  --card-border-radius: 15px; /* Define el radio de borde de las tarjetas. Afecta a la mayoría de los contenedores y tarjetas. */
+  --form-input-border: #d1c4e9; /* Define el color del borde de los formularios. Afecta a los formularios de `contacto.html` y `comentario.html`. */
+  --form-input-focus: #80deea; /* Define el color del borde de los formularios al enfocarlos. Afecta a los formularios de `contacto.html` y `comentario.html`. */
+  --font-family-base: 'Comic Sans MS', cursive, sans-serif; /* Define la tipografía base. Afecta a todos los archivos HTML. */
+  --header-bg: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent), var(--secondary)); /* Define el fondo del encabezado. Afecta al `header`. */
+  --transition-duration: 0.3s; /* Define la duración de las transiciones. Afecta a la mayoría de los elementos interactivos. */
+  --shadow-card-hover: 0 20px 45px rgba(0, 0, 0, 0.45), 0 12px 18px rgba(0, 0, 0, 0.38), 12px 0 0 0 rgba(0, 0, 0, 0.5); /* Define la sombra de las tarjetas al pasar el mouse. Afecta a `.cuento`, `.about-section .banner-carrusel` y `.pagina-compra .cuento`. */
+  --shadow-card: 0 15px 30px rgba(0, 0, 0, 0.35), 0 8px 12px rgba(0, 0, 0, 0.30), 8px 0 0 0 rgba(0, 0, 0, 0.4); /* Define la sombra de las tarjetas. Afecta a la mayoría de los contenedores y tarjetas. */
+}
+    :root{
+
+  
+      --secondary-color: #fff;
+      --accent-color: #f8bbd0;
+      --background-dark: #121212;
+      --text-light: #f5f5f5;
+      --box-shadow: 0 10px 30px rgba(0,0,0,.3);
+      --border-radius: 20px;
+    }
+
+    main {
+      flex-grow: 1;
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      perspective: 2000px;
+      padding: 80px;
+    }
+
+    .carousel-wrapper {
+      position: relative;
+      width: 350px;
+      height: 300px;
+      transform-style: preserve-3d;
+      opacity: 0;
+    }
+
+
+/* Pseudo-elemento para el círculo del eje */
+  /* Pseudo-elemento para el círculo del eje */
+.carousel-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 80%;
+      height: 80%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(26, 25, 25, 0.3) 0%, rgba(255, 238, 0, 0) 50%);
+      transform: translate(-50%,-50%) rotateX(90deg) translateZ(-100px);
+      pointer-events: none;
+      z-index: -1;
+      box-shadow: 0 0 100px 20px rgba(23, 23, 22, 0.278)
+    }
+    .flip-card-container {
+      position: absolute;
+      width: 300px;
+      height: 400px;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      opacity: 0;
+      object-fit: cover;
+    }
+
+    .flip-inner {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .flip-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      background-color: #2a2a2a;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+
+    .card-face.back {
+      transform: rotateY(180deg);
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--secondary), var(--primary));
+      color: var(--background-dark);
+    }
+
+    .card-face img {
+      width: 80%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .card-face h3 {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--primary);
+      margin: 20px 10px 10px;
+    }
+
+    .card-face p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: var(--background-dark);
+      color: var(--accent-color);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 50px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: transform .2s ease, background-color .3s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      background-color: #000;
+    }
+
+    /* Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      overflow: auto;
+      background-color: rgba(0,0,0,.7);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity .3s ease-in-out;
+    }
+
+    .modal.is-visible {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background-color: #2a2a2a;
+      color: var(--text-light);
+      margin: auto;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 15px rgba(0,0,0,.5);
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+      transform: scale(.9);
+      transition: transform .3s ease-in-out;
+    }
+
+    .modal.is-visible .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #444;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--accent-color);
+    }
+
+    .modal-close-btn {
+      color: var(--text-light);
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .modal-body img {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+    }
+
+    /* Media Query para pantallas pequeñas (rotación vertical) */
+    /* MEDIA QUERY para móviles */
+@media (max-width: 768px) {
+  .carrusel-3d-container {
+    display: none; /* Oculta el carrusel 3D */
+  }
+  .mobile-cards {
+    display: flex; /* Muestra el nuevo diseño para móviles */
+  }
+}
+  </style>
+</head>
+<body>
+  <header class="hero-section">
+     <div class="watermark-container">
+      <h1 id="titulo-arcoiris">Servicios que orbitan a tu alrededor</h1>
+      <img src="img/" alt="Marca de agua" class="watermark" id="watermark" width="15%">
+    </div>
+  </header>
+   <canvas id="universo"></canvas>
+  <div id="navbar-container"></div>
+  <main class="pagina-ser3d-main">
+    <div class="carousel-wrapper" aria-live="polite">
+      <div class="flip-card-container" data-index="0">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/audiocuentos.jpg" alt="Cuentos personalizados" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Cuentos personalizados</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+            <p>Historias mágicas creadas con el nombre y personajes que tu hijo elija.</p>
+            <div class="icon">📖</div>
+            <button class="button modal-btn"
+                    data-title="Cuentos personalizados"
+                    data-image="https://cdn.pixabay.com/photo/2016/11/29/11/48/child-1869389_1280.jpg"
+                    data-content="Nuestros cuentos personalizados son una aventura única para cada niño. Tú nos das los datos de tu pequeño héroe: su nombre, su personaje favorito, sus amigos y hasta su mascota. Nosotros creamos una historia inolvidable donde él o ella es el protagonista. ¡La magia de la lectura cobra vida en cada página!">Más detalles</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip-card-container" data-index="1">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/5 perrosleyendo.jpg" alt="Cuentacuentos en vivo" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Cuentacuentos en vivo</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🎭</div>
+            <p>Llevamos la magia a tu evento con narradores profesionales y juegos interactivos.</p>
+            <button class="button modal-btn"
+                    data-title="Cuentacuentos en vivo"
+                    data-image="https://cdn.pixabay.com/photo/2023/06/17/14/03/woman-8070233_1280.jpg"
+                    data-content="Transformamos cualquier celebración en un reino de fantasía. Nuestros narradores profesionales, con años de experiencia, cautivarán a niños y adultos por igual. La función incluye música, marionetas y juegos interactivos que aseguran un evento lleno de risas y momentos memorables.">Más detalles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="2">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/a sola.jpg" alt="Kit mágico" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Kit mágico</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+            <p>Una caja llena de sorpresas, manualidades y libros temáticos para disfrutar en casa.</p>
+            <div class="icon">🎁</div>
+            <button class="button modal-btn"
+                    data-title="Kit mágico"
+                    data-image="img/audiocuentos.jpg"
+                    data-content="El kit mágico es la dosis perfecta de creatividad para el hogar. Cada caja temática contiene un libro, materiales para manualidades, y sorpresas que desafían a la imaginación. Es ideal para tardes de lluvia, fiestas de pijama o simplemente para fomentar la creatividad de los más pequeños.">Más detalles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="3">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/25ce4f0a-92fe-438b-966e-29b04eb58739 (1).jpg" alt="Ilustraciones digitales" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Ilustraciones digitales</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+          <div class="icon">🎨</div>
+            <p>Ilustraciones personalizadas de tu familia o tus mascotas al estilo de los cuentos de hadas.</p>
+            <button class="button modal-btn"
+                    data-title="Ilustraciones digitales"
+                    data-image="https://cdn.pixabay.com/photo/2016/12/15/12/26/man-1908253_1280.jpg"
+                    data-content="Capturamos la esencia de tu familia o tus queridas mascotas en hermosas ilustraciones digitales. Cada obra de arte es única y puede ser usada para decorar el cuarto de los niños, como regalo especial o para imprimir en un libro de cuentos. Un recuerdo que durará para siempre.">Más detalles</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="4">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/A.JPG" alt="Animación 3D" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Animación 3D</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+            <p>Damos vida a tus ideas con animaciones 3D de alta calidad, desde personajes hasta productos.</p>
+            <div class="icon">🎥</div>
+            <button class="button modal-btn"
+                    data-title="Animación 3D"
+                    data-image="https://cdn.pixabay.com/photo/2017/08/07/11/40/3d-2602123_1280.jpg"
+                    data-content="Nuestro equipo de animadores 3D da vida a cualquier concepto. Desde la creación de personajes animados para videos musicales, hasta la visualización de productos para campañas de marketing. Ofrecemos animaciones detalladas y de alta calidad para cualquier proyecto.">Más detalles</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip-card-container" data-index="5">
+        <div class="flip-inner is-flipped">
+          <div class="card-face front">
+            <img src="img/adorable-cartoon-animals-kawaii-style-cute-wildlife-illustrations_845967-506.jpg" alt="Podcast infantil" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Podcast infantil</h3>
+              <button class="button flip-btn">Ver detalle</button>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🎤</div>
+            <p>Creamos y producimos podcasts educativos y divertidos para niños de todas las edades.</p>
+            <button class="button modal-btn"
+                    data-title="Podcast infantil"
+                    data-image="https://cdn.pixabay.com/photo/2015/09/01/18/43/podcast-917409_1280.jpg"
+                    data-content="Conviértete en un narrador de historias con nuestros servicios de producción de podcasts. Te ayudamos a grabar, editar y publicar tu propio programa, con efectos de sonido, música original y una calidad de audio profesional. Ideal para marcas, educadores o creadores de contenido.">Más detalles</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="serviceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Título del Servicio</h2>
+        <button class="modal-close-btn" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="Imagen del servicio" />
+        <p id="modalDescription">Descripción del servicio.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aquí cargamos el footer -->
+  <div id="footer-container"></div>
+  <script src="script.js"></script>
+</body>
+</html>

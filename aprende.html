@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>LectoMundo Pokémon</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+  <header>
+    <h1 id="titulo-arcoiris"> 📚 LectoMundo Pokémon </h1>
+    <img src="img/DEF.png" alt="Marca de agua"  width="25%" class="Aprende">
+  </header>
+    
+ <!-- Aquí cargamos el navbar -->
+  <div id="navbar-container"></div>
+
+     <canvas id="universo"></canvas>
+  <div class="containeraprende">
+    <div class="progreso">
+      <span>Puntos: <strong id="puntos">0</strong></span>
+      <span>Pistas usadas: <strong id="pistas-count">0</strong></span>
+    </div>
+
+    <div class="juego">
+      <h2>¿Qué Pokémon es este?</h2>
+      <img id="img-pokemon" src="" alt="Pokémon" />
+
+      <button onclick="leerNombre()">🔊 Escuchar nombre</button>
+      <button onclick="mostrarPista()">💡 Pista</button>
+
+      <h3>Completa el nombre:</h3>
+      <div class="word-blank" id="palabra"></div>
+
+      <h3>Letras disponibles:</h3>
+      <div class="letras-desordenadas" id="letras"></div>
+
+      <button onclick="verificarRespuesta()">✅ Enviar Respuesta</button>
+
+      <div class="pistas-usadas" id="pistas-usadas">
+        <p><em>No has usado ninguna pista.</em></p>
+      </div>
+
+      <p id="resultado-pokemon" class="resultado"></p>
+
+      <div class="pokemon-resueltos">
+        <h3>✅ Pokémon Aprendidos:</h3>
+        <ul id="lista-resueltos"></ul>
+      </div>
+    </div>
+  </div>
+    <div id="footer-container"></div>
+ <script src="script.js"></script>
+</body>
+</html>

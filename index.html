@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Universo de Burbujas con Cuentos Reales</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body>
+  <header>
+    
+    <div class="watermark-container">
+      <h1 id="titulo-arcoiris">Los perritasticos de Dalmapolis</h1>
+      <img src="img/LogoVerdad.png" alt="Marca de agua" class="watermark" id="watermark" width="15%">
+    </div>
+    <p>Visitantes <span id="visitas">0</span></p>
+  </header>
+
+  <!-- Aquí cargamos el navbar -->
+  <div id="navbar-container"></div>
+
+  <!-- Aquí cargamos el banner (solo en home) -->
+  <div id="banner-container"></div>
+
+  <canvas id="universo"></canvas>
+
+  <h2>📚 Cuentos Variados para los mas peques de la casa</h2>
+  <div class="contenedor">
+    <figure class="cuento" data-url="https://www.goodreads.com/book/show/4948.The_Very_Hungry_Caterpillar">
+      <img src="img/oruga.jpg" alt="La Oruga Muy Hambrienta" />
+      <figcaption>
+        La Oruga Muy Hambrienta
+        <button class="like" onclick="votar('cuento1', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento1', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento1">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento1" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento1')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento1"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/Where_the_Wild_Things_Are">
+      <img src="img/donde viven los mostruos.jpg" alt="Donde Viven los Monstruos" />
+      <figcaption>
+        Donde Viven los Monstruos
+        <button class="like" onclick="votar('cuento2', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento2', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento2">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento2" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento2')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento2"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/The_Giving_Tree">
+      <img src="img/Arbol.jpg" alt="El Árbol Generoso" />
+      <figcaption>
+        El Árbol Generoso <!-- Corregido: Eliminada la segunda etiqueta figcaption -->
+        <button class="like" onclick="votar('cuento3', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento3', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento3">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento3" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento3')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento3"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/Goodnight_Moon">
+      <img src="img/goodnig.jpg" alt="Buenas Noches Luna" />
+      <figcaption>
+        Buenas Noches Luna <!-- Corregido: Eliminada la segunda etiqueta figcaption -->
+        <button class="like" onclick="votar('cuento4', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento4', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento4">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento4" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento4')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento4"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/The_Cat_in_the_Hat">
+      <img src="img/The_Cat_in_the_Hat.JPG" alt="El Gato Ensombrerado" />
+      <figcaption>
+        El Gato Ensombrerado
+        <button class="like" onclick="votar('cuento5', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento5', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento5">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento5" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento5')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento5"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/Charlotte%27s_Web">
+      <img src="img/telaraña.jpg" alt="La Telaraña de Charlotte" />
+      <figcaption>
+        La Telaraña de Charlotte
+        <button class="like" onclick="votar('cuento6', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento6', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento6">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento6" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento6')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento6"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/Yertle_the_Turtle_and_Other_Stories">
+      <img src="img/turtle.jpg" alt="Yertle la Tortuga" />
+      <figcaption>
+        Yertle la Tortuga
+        <button class="like" onclick="votar('cuento7', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento7', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento7">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento7" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento7')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento7"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/The_Sneetches_and_Other_Stories">
+      <img src="img/sneetches.png" alt="Los Sneetches" />
+      <figcaption>
+        Los Sneetches
+        <button class="like" onclick="votar('cuento8', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento8', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento8">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento8" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento8')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento8"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://en.wikipedia.org/wiki/Monkey_Puzzle_(book)">
+      <img src="img/monkey.jpg" alt="Monkey Puzzle" />
+      <figcaption>
+        Monkey Puzzle
+        <button class="like" onclick="votar('cuento9', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento9', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento9">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento9" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento9')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento9"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://es.wikipedia.org/wiki/La_Cenicienta">
+      <img src="img/cenicienta.jpg" alt="La Cenicienta" />
+      <figcaption>
+        La Cenicienta
+        <button class="like" onclick="votar('cuento10', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento10', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento10">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento10" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento10')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento10"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://es.wikipedia.org/wiki/Los_tres_cerditos">
+      <img src="img/los tres cerditos.jpg" alt="Los Tres Cerditos" />
+      <figcaption>
+        Los Tres Cerditos
+        <button class="like" onclick="votar('cuento11', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento11', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento11">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento11" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento11')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento11"></div>
+      </figcaption>
+    </figure>
+
+    <figure class="cuento" data-url="https://es.wikipedia.org/wiki/El_gigante_de_hierro">
+      <img src="img/GIGANTEDEHIERRO.jpg" alt="El Gigante de Hierro" />
+      <figcaption>
+        El Gigante de Hierro
+        <button class="like" onclick="votar('cuento12', 'like')">👍 Me gusta</button>
+        <button class="dislike" onclick="votar('cuento12', 'dislike')">👎 No me gusta</button>
+        <div class="votes-display" id="votos-cuento12">Likes: 0 | Dislikes: 0</div>
+        <textarea id="comentario-cuento12" placeholder="Escribe tu comentario aquí..."></textarea>
+        <button onclick="agregarComentario('cuento12')">Enviar comentario</button>
+        <div class="comments-list" id="comentarios-cuento12"></div>
+      </figcaption>
+    </figure>
+  </div>
+
+  <!-- Aquí cargamos el footer -->
+  <div id="footer-container"></div>
+
+  <!-- Cargar scrip.js al final del body -->
+  <script src="script.js"></script>
+</body>
+</html>
