@@ -493,15 +493,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Buscador
-    searchInput.addEventListener('input', (e) => {
-      const searchTerm = e.target.value.toLowerCase();
-      const filteredPokemon = allPokemonData.filter(pokemon => {
-        const nameMatch = pokemon.name.includes(searchTerm);
-        const typeMatch = pokemon.types.some(t => t.type.name.includes(searchTerm));
-        return nameMatch || typeMatch;
-      });
-      renderPokemonCards(filteredPokemon);
-    });
+  
 
     // Eventos del catálogo
     pokemonListElement.addEventListener('click', (e) => {
@@ -611,17 +603,29 @@ document.addEventListener('DOMContentLoaded', () => {
         modal.style.display = 'none';
       }
     });
+const fetchAllPokemon = async () => {
+  try {
+    // Primero obtenemos la lista básica de Pokémon
+    const listResponse = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+    const listData = await listResponse.json();
 
-    // Cargar Pokémon
-    const fetchAllPokemon = async () => {
-      const response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
-      const data = await response.json();
-      const pokemonPromises = data.results.map(pokemon => fetch(pokemon.url).then(res => res.json()));
-      allPokemonData = await Promise.all(pokemonPromises);
+    // Ahora usamos tu función de Netlify para obtener cada Pokémon uno por uno
+    const pokemonPromises = listData.results.map(async (pokemon, index) => {
+      const id = index + 1;
+      const functionUrl = `/.netlify/functions/getData?id=${id}`;
+      const response = await fetch(functionUrl);
+      if (!response.ok) throw new Error(`Error al cargar Pokémon ID ${id}`);
+      return await response.json();
+    });
 
-      stock = initStock();
-      renderPokemonCards(allPokemonData.filter(p => TOP_POKEMON_IDS.includes(p.id)));
-    };
+    allPokemonData = await Promise.all(pokemonPromises);
+    stock = initStock();
+    renderPokemonCards(allPokemonData.filter(p => TOP_POKEMON_IDS.includes(p.id)));
+  } catch (error) {
+    console.error("Error al cargar Pokémon usando la función serverless:", error);
+    alert("No se pudieron cargar los Pokémon. Revisa la consola.");
+  }
+};
 
     fetchAllPokemon();
   });
@@ -1369,8 +1373,8 @@ function inicializarServicios() {
 
       // ---- Parámetros del carrusel
       const numCards = allCards.length;
-      const cardArc = 300 / numCards;
-      const radius = 400;
+      const cardArc = 290 / numCards;
+      const radius = 420;
       let carouselRotationTween;
 
       // ---- Colocación de tarjetas en el anillo 3D
@@ -1427,11 +1431,11 @@ function inicializarServicios() {
       const tl = gsap.timeline();
       
       // Estado inicial del carrusel con GSAP y rotación para mostrar el eje
-      gsap.set(carousel, { rotationX: 10, rotationY: 0 });
+      gsap.set(carousel, { rotationX: 0, rotationY: 0 });
 
       tl.from(heroTitle, { y: -50, opacity: 0, duration: 1 });
       tl.to(carousel, { opacity: 1, duration: 0.8 }, "-=0.5");
-      tl.to(allCards, { opacity: 1, duration: 0.8, stagger: 0.1, ease: "power2.out" }, "-=0.5");
+      tl.to(allCards, { opacity: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" }, "-=0.5");
 
       // ---- Rotación infinita del carrusel (solo en escritorio)
       if (!isMobile) {
@@ -1454,6 +1458,7 @@ function inicializarServicios() {
 // ====================================================================
 // --- 10. INICIALIZACIÓN PRINCIPAL ---
 // ====================================================================
+
 
 document.addEventListener("DOMContentLoaded", () => {
   inicializarUniverso();
@@ -1481,6 +1486,7 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarBannerCarrusel();
   }
 
+
   if (path.includes('blog.html')) {
     inicializarBlog();
     initBlogConfetti();
@@ -1497,16 +1503,13 @@ document.addEventListener("DOMContentLoaded", () => {
     inicializarAprende();
   }
 
-    if (path.includes('servicios.html')) {
+  if (path.includes('servicios.html')) {
     inicializarServicios()
-     }
+  }
 
   // ✅ CORRECCIÓN: Llamar a estas funciones solo en las páginas correctas.
   if (path.includes('comentario.html')) {
     setupContactForm();
-    setupCommentForm();
-  }
-     if (path.includes('servicios.html')) {
     setupCommentForm();
   }
 
@@ -1540,3 +1543,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// --- Nuevas funciones para los juegos de matemáticas ---

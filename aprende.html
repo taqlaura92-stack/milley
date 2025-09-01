@@ -5,58 +5,837 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>LectoMundo Pokémon</title>
 
-  <!-- Google Fonts -->
+  <!-- Fuentes -->
   <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Estilos -->
   <link rel="stylesheet" href="style.css"/>
+  
+  <!-- Scripts esenciales -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 </head>
+
+<style>
+/* Estilos específicos para las secciones de matemáticas */
+.game-section {
+  display: grid;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+  animation: cardFadeIn 0.8s ease-out forwards;
+}
+
+    :root {
+      --primary: #FF4500;
+      --accent: #FFD700;
+      --font-family: 'Comic Neue', cursive;
+      --shadow: 0 6px 15px rgba(0,0,0,0.1);
+    }
+
+* {
+  box-sizing: border-box;
+}
+
+body, html {
+  overflow-x: hidden;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+    header {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    #titulo-arcoiris {
+      font-family: 'Fredoka One', cursive;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: #e91e63;
+      margin: 10px;
+    }
+
+    .puntaje-nivel {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 10px 0;
+      font-weight: bold;
+      font-size: 1.1em;
+      color: #333;
+    }
+
+    main {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .game-section {
+      background: white;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 30px;
+      margin: 20px 0;
+      text-align: center;
+      animation: cardFadeIn 0.8s ease-out forwards;
+    }
+
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h2 {
+      font-family: 'Fredoka One', cursive;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    /* Tabla de valor posicional */
+    .tabla-matematica {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 15px;
+      background: #fff9f9;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .fila-labels {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      font-weight: bold;
+      color: #333;
+      font-size: 0.9em;
+      gap: 10px;
+      text-align: center;
+    }
+
+    .fila-pokemon {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin: 10px 0;
+    }
+
+    .celda {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100px;
+      background: #f0f8ff;
+      border-radius: 10px;
+    }
+
+    .celda p {
+      margin-top: 5px;
+      font-size: 0.9em;
+      color: var(--primary);
+      font-weight: bold;
+    }
+
+    /* Tamaños del mismo Pokémon */
+    .pokemon-unidad {
+      width: 5px;
+    filter: drop-shadow(0 0 6px #ff9800);
+    }
+
+    .pokemon-decena {
+      width: 10px;
+;
+      filter: drop-shadow(0 0 6px #ff9800);
+    }
+.pokemon-centena {
+  width: 30px; /* Ajusta este valor para hacerlos más pequeños o más grandes */
+  height: auto; /* Mantiene la proporción de la imagen */
+}
+    .operador {
+      font-size: 2em;
+      font-weight: bold;
+      color: #e74c3c;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    .separador {
+      height: 2px;
+      background: #333;
+      width: 80%;
+      margin: 10px auto;
+      border-radius: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .pokemon-unidad { width: 10px; }
+      .pokemon-decena { width: 15px; }
+      .pokemon-centena { width: 20px; }
+    }
+
+    @media (max-width: 480px) {
+      .pokemon-unidad { width: 5px; }
+      .pokemon-decena { width: 10px; }
+      .pokemon-centena { width: 15px; }
+    }
+
+    /* Inputs y resultados */
+    .respuesta-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .input-respuesta {
+      padding: 12px;
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      font-size: 1.4em;
+      width: 150px;
+      text-align: center;
+      font-family: 'Fredoka One', cursive;
+      background: white;
+    }
+
+    button {
+      padding: 12px 20px;
+      font-family: 'Fredoka One', cursive;
+      border: none;
+      border-radius: 20px;
+      background: var(--primary);
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .siguiente-pregunta {
+      background: #32CD32;
+    }
+
+    .resultado {
+      margin-top: 15px;
+      font-size: 1.3em;
+      font-weight: bold;
+    }
+
+    .resultado.correcto {
+      color: #28a745;
+    }
+
+    .resultado.incorrecto {
+      color: #dc3545;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .nivel-info {
+      font-size: 1.1em;
+      color: #e65100;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+@keyframes cardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.game-section:hover {
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+}
+
+.container-juego-matematicas {
+  text-align: center;
+  font-family: 'Comic Neue', cursive;
+  color: #333;
+}
+
+.pregunta-matematica {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.pregunta-matematica .numero-pokemon-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.pregunta-matematica img {
+  max-width: 20px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.pregunta-matematica .operador {
+  font-size: 2.5em;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+/* Contenedor de respuesta */
+.respuesta-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+#respuesta-suma, #respuesta-resta, #respuesta-multiplicacion {
+  padding: 10px;
+  border-radius: 8px;
+  border: 2px solid var(--accent);
+  font-family: 'Comic Neue', cursive;
+  font-size: 1.2em;
+  width: 100px;
+  text-align: center;
+}
+
+.resultado {
+  margin-top: 15px;
+  font-size: 1.5em;
+  font-weight: bold;
+  min-height: 25px;
+}
+
+.resultado.correcto {
+  color: #28a745;
+}
+
+.resultado.incorrecto {
+  color: #dc3545;
+}
+
+.siguiente-pregunta {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  font-family: 'Fredoka One', cursive;
+  border: none;
+  border-radius: 20px;
+  background-color: var(--primary);
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.siguiente-pregunta:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Colores por tipo de Pokémon */
+.game-section.type-grass { background: linear-gradient(145deg, #e8f5e9, #c8e6c9); }
+.game-section.type-fire  { background: linear-gradient(145deg, #ffe0b2, #ffb74d); }
+.game-section.type-water { background: linear-gradient(145deg, #e3f2fd, #bbdefb); }
+.game-section.type-electric { background: linear-gradient(145deg, #fff9c4, #ffeb3b); }
+
+/* Asegúrate de que las secciones ocultas no se muestren */
+
+</style>
+
 <body>
 
   <header>
-    <h1 id="titulo-arcoiris"> 📚 LectoMundo Pokémon </h1>
-    <img src="img/DEF.png" alt="Marca de agua"  width="25%" class="Aprende">
+    <h1 id="titulo-arcoiris">📚 LectoMundo Pokémon</h1>
+    <img src="img/DEF.png" alt="Marca de agua" width="10%" class="Aprende">
   </header>
-    
- <!-- Aquí cargamos el navbar -->
+
+  <!-- Navbar dinámico -->
   <div id="navbar-container"></div>
 
-     <canvas id="universo"></canvas>
-  <div class="containeraprende">
-    <div class="progreso">
-      <span>Puntos: <strong id="puntos">0</strong></span>
-      <span>Pistas usadas: <strong id="pistas-count">0</strong></span>
-    </div>
+  <!-- Fondo animado -->
+  <canvas id="universo"></canvas>
 
-    <div class="juego">
-      <h2>¿Qué Pokémon es este?</h2>
-      <img id="img-pokemon" src="" alt="Pokémon" />
-
-      <button onclick="leerNombre()">🔊 Escuchar nombre</button>
-      <button onclick="mostrarPista()">💡 Pista</button>
-
-      <h3>Completa el nombre:</h3>
-      <div class="word-blank" id="palabra"></div>
-
-      <h3>Letras disponibles:</h3>
-      <div class="letras-desordenadas" id="letras"></div>
-
-      <button onclick="verificarRespuesta()">✅ Enviar Respuesta</button>
-
-      <div class="pistas-usadas" id="pistas-usadas">
-        <p><em>No has usado ninguna pista.</em></p>
-      </div>
-
-      <p id="resultado-pokemon" class="resultado"></p>
-
-      <div class="pokemon-resueltos">
-        <h3>✅ Pokémon Aprendidos:</h3>
-        <ul id="lista-resueltos"></ul>
-      </div>
-    </div>
+  <!-- Mensaje de bienvenida -->
+  <div class="mensaje-inicial">
+    <p class="texto-bienvenida">
+      ¡Hola, pequeño Entrenador! 🌟<br>
+      ¿Listo para una <span class="animacion-gusanito">aventura</span> matemática?<br>
+      ¡Aprende con Pokémon y gana puntos! ✨
+    </p>
   </div>
-    <div id="footer-container"></div>
- <script src="script.js"></script>
+
+  <!-- Tarjetas de bienvenida -->
+  <div class="pokemon-cards-bienvenida">
+    <a href="#juego-adivinar" class="pokemon-card-link">
+      <div class="pokemon-card-bienvenida type-electric">
+        <div class="card-header">
+          <span class="pokemon-name">Adivina</span>
+          <span class="pokemon-level">Lv. 5</span>
+        </div>
+        <div class="card-image">
+          <img src="img/APRENDE.jpg" alt="Aprende">
+        </div>
+        <div class="card-message">
+          <p>¡El poder de la lectura te hará más fuerte!</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="#juego-suma" class="pokemon-card-link" onclick="event.preventDefault(); document.getElementById('juego-suma').scrollIntoView({ behavior: 'smooth' }); generarSuma();">
+      <div class="pokemon-card-bienvenida type-grass">
+        <div class="card-header">
+          <span class="pokemon-name">Suma</span>
+          <span class="pokemon-level">Lv. 5</span>
+        </div>
+        <div class="card-image">
+          <img src="img/suma.png" alt="Suma">
+        </div>
+        <div class="card-message">
+          <p>¡Aprender a sumar es la mejor semilla para crecer!</p>
+        </div>
+      </div>
+    </a>
+    
+    <a href="#juego-resta" class="pokemon-card-link" onclick="event.preventDefault(); document.getElementById('juego-resta').scrollIntoView({ behavior: 'smooth' }); generarResta();">
+      <div class="pokemon-card-bienvenida type-fire">
+        <div class="card-header">
+          <span class="pokemon-name">Resta</span>
+          <span class="pokemon-level">Lv. 5</span>
+        </div>
+        <div class="card-image">
+          <img src="img/resta.png" alt="Resta">
+        </div>
+        <div class="card-message">
+          <p>¡Enciende tu curiosidad y descubre la resta!</p>
+        </div>
+      </div>
+    </a>
+
+    <a href="#juego-multiplicacion" class="pokemon-card-link" onclick="event.preventDefault(); document.getElementById('juego-multiplicacion').scrollIntoView({ behavior: 'smooth' }); generarMultiplicacion();">
+      <div class="pokemon-card-bienvenida type-water">
+        <div class="card-header">
+          <span class="pokemon-name">Multiplica</span>
+          <span class="pokemon-level">Lv. 5</span>
+        </div>
+        <div class="card-image">
+          <img src="img/Multiplicacion.png" alt="Squirtle">
+        </div>
+        <div class="card-message">
+          <p>¡Sumérgete en la multiplicación y sé un campeón!</p>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <!-- Juegos principales -->
+  <main>
+    <!-- Juego de Adivinar Nombre -->
+    <section id="juego-adivinar" class="game-section">
+      <div class="containeraprende">
+        <div class="progreso">
+          <span>Puntos: <strong id="puntos">0</strong></span>
+          <span>Pistas usadas: <strong id="pistas-count">0</strong></span>
+        </div>
+        <div class="juego">
+          <h2>¿Qué Pokémon es este?</h2>
+          <img id="img-pokemon" src="" alt="Pokémon" />
+          <button onclick="leerNombre()">🔊 Escuchar nombre</button>
+          <button onclick="mostrarPista()">💡 Pista</button>
+          <h3>Completa el nombre:</h3>
+          <div class="word-blank" id="palabra"></div>
+          <h3>Letras disponibles:</h3>
+          <div class="letras-desordenadas" id="letras"></div>
+          <button onclick="verificarRespuesta()">✅ Enviar Respuesta</button>
+          <div class="pistas-usadas" id="pistas-usadas">
+            <p><em>No has usado ninguna pista.</em></p>
+          </div>
+          <p id="resultado-pokemon" class="resultado"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Juego de Suma -->
+     <section id="juego-suma" class="game-section">
+      <h2>¡Suma con Pokémon!</h2>
+      <p class="nivel-info" id="nivel-suma">Nivel 1: Sumas de 1 dígito</p>
+      <div id="pregunta-suma"></div>
+      <div class="respuesta-container">
+        <input type="number" id="respuesta-suma" class="input-respuesta" placeholder="?" inputmode="numeric">
+        <button onclick="verificarSuma()">✅ Comprobar</button>
+      </div>
+      <p id="resultado-suma" class="resultado"></p>
+      <button onclick="generarSuma()" class="siguiente-pregunta">Siguiente ➕</button>
+    </section>
+
+    <!-- Juego de Resta -->
+    <section id="juego-resta" class="game-section">
+      <div class="container-juego-matematicas">
+        <h2>Aprende a restar con Pokémon</h2>
+        <div class="pregunta-matematica" id="pregunta-resta"></div>
+        <div class="respuesta-container">
+          <input type="number" id="respuesta-resta" placeholder="Tu respuesta">
+          <button onclick="verificarResta()">¡Comprobar!</button>
+        </div>
+        <p id="resultado-resta" class="resultado"></p>
+        <button onclick="generarResta()" class="siguiente-pregunta">Siguiente Resta</button>
+      </div>
+    </section>
+
+    <!-- Juego de Multiplicación -->
+    <section id="juego-multiplicacion" class="game-section" >
+      <div class="container-juego-matematicas">
+        <h2>Aprende a multiplicar con Pokémon</h2>
+        <div class="pregunta-matematica" id="pregunta-multiplicacion"></div>
+        <div class="respuesta-container">
+          <input type="number" id="respuesta-multiplicacion" placeholder="Tu respuesta">
+          <button onclick="verificarMultiplicacion()">¡Comprobar!</button>
+        </div>
+        <p id="resultado-multiplicacion" class="resultado"></p>
+        <button onclick="generarMultiplicacion()" class="siguiente-pregunta">Siguiente Multiplicación</button>
+      </div>
+    </section>
+
+    <!-- Sección futura -->
+    <section id="proximamente" class="game-section">
+      <div class="container-proximamente">
+        <h2>¡Próximamente más aventuras Pokémon!</h2>
+        <p>Estamos trabajando duro para traer más juegos y diversión.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer dinámico -->
+  <div id="footer-container"></div>
+
+  <!-- Script principal -->
+  <script src="script.js"></script>
+
+  <!-- Inicializar juego de adivinar por defecto -->
+  <script>
+    
+    // Lista de Pokémon (mismo tipo por operación)
+    const POKEMON_LIST = [
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png", // Bulbasaur
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png", // Charmander
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png", // Squirtle
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png", // Pikachu
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png", // Eevee
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/052.png", // Meowth
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/039.png", // Jigglypuff
+      "https://assets.pokemon.com/assets/cms2/img/pokedex/full/151.png"  // Mew
+    ];
+
+    // Estado del juego
+    const estado = {
+      puntos: 0,
+      nivel: 1,
+      pokemonActual: ""
+    };
+
+    // Cargar estado
+    function cargarEstado() {
+      const guardado = JSON.parse(localStorage.getItem('lectomundo-matematicas')) || {};
+      estado.puntos = guardado.puntos || 0;
+      estado.nivel = guardado.nivel || 1;
+      document.getElementById('puntos').textContent = estado.puntos;
+      document.getElementById('nivel').textContent = estado.nivel;
+    }
+
+    function guardarEstado() {
+      localStorage.setItem('lectomundo-matematicas', JSON.stringify(estado));
+    }
+
+    function subirNivel() {
+      const nuevoNivel = Math.floor(estado.puntos / 3) + 1;
+      if (nuevoNivel > estado.nivel) {
+        estado.nivel = nuevoNivel;
+        document.getElementById('nivel').textContent = estado.nivel;
+        alert(`🎉 ¡Subiste al Nivel ${estado.nivel}!`);
+      }
+    }
+
+    // Elegir un Pokémon aleatorio
+    function elegirPokemon() {
+      const idx = Math.floor(Math.random() * POKEMON_LIST.length);
+      return POKEMON_LIST[idx];
+    }
+
+    // Descomponer número
+    function descomponer(num) {
+      return {
+        c: Math.floor(num / 100),
+        d: Math.floor((num % 100) / 10),
+        u: num % 10
+      };
+    }
+
+    // Renderizar fila de Pokémon
+    function renderFila(containerId, num) {
+      const { c, d, u } = descomponer(num);
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      const fila = document.createElement('div');
+      fila.className = 'fila-pokemon';
+
+      // Centenas
+      const celdaC = document.createElement('div');
+      celdaC.className = 'celda';
+      if (c > 0) {
+        for (let i = 0; i < c; i++) {
+          const img = document.createElement('img');
+          img.src = estado.pokemonActual;
+          img.alt = 'Pokémon centena';
+          img.className = 'pokemon-centena';
+          celdaC.appendChild(img);
+        }
+        celdaC.innerHTML += `<p>${c}C</p>`;
+      } else {
+        celdaC.innerHTML = '<p>—</p>';
+      }
+      fila.appendChild(celdaC);
+
+      // Decenas
+      const celdaD = document.createElement('div');
+      celdaD.className = 'celda';
+      if (d > 0) {
+        for (let i = 0; i < d; i++) {
+          const img = document.createElement('img');
+          img.src = estado.pokemonActual;
+          img.alt = 'Pokémon decena';
+          img.className = 'pokemon-decena';
+          celdaD.appendChild(img);
+        }
+        celdaD.innerHTML += `<p>${d}D</p>`;
+      } else {
+        celdaD.innerHTML = '<p>—</p>';
+      }
+      fila.appendChild(celdaD);
+
+      // Unidades
+      const celdaU = document.createElement('div');
+      celdaU.className = 'celda';
+      if (u > 0) {
+        for (let i = 0; i < u; i++) {
+          const img = document.createElement('img');
+          img.src = estado.pokemonActual;
+          img.alt = 'Pokémon unidad';
+          img.className = 'pokemon-unidad';
+          celdaU.appendChild(img);
+        }
+        celdaU.innerHTML += `<p>${u}U</p>`;
+      } else {
+        celdaU.innerHTML = '<p>—</p>';
+      }
+      fila.appendChild(celdaU);
+
+      container.appendChild(fila);
+    }
+
+    // Generar número según nivel
+    function generarNumero() {
+      const n = estado.nivel;
+      if (n === 1) return Math.floor(Math.random() * 9) + 1; // 1-9
+      if (n === 2) return Math.floor(Math.random() * 90) + 10; // 10-99
+      return Math.floor(Math.random() * 900) + 100; // 100-999
+    }
+
+    // --- SUMA ---
+    window.generarSuma = function () {
+      estado.pokemonActual = elegirPokemon();
+      const a = generarNumero();
+      const b = generarNumero();
+      window.sumaResultado = a + b;
+
+      document.getElementById('pregunta-suma').innerHTML = `
+        <div class="tabla-matematica">
+          <div class="fila-labels">
+            <div>Centenas</div>
+            <div>Decenas</div>
+            <div>Unidades</div>
+          </div>
+          <div id="fila-sumando1"></div>
+          <div class="operador">+</div>
+          <div id="fila-sumando2"></div>
+          <div class="separador"></div>
+        </div>
+      `;
+
+      renderFila('fila-sumando1', a);
+      renderFila('fila-sumando2', b);
+
+      document.getElementById('respuesta-suma').value = '';
+      document.getElementById('resultado-suma').textContent = '';
+    };
+
+    window.verificarSuma = function () {
+      const input = document.getElementById('respuesta-suma');
+      const resultado = document.getElementById('resultado-suma');
+      const val = input.value.trim();
+
+      if (!val || isNaN(val)) {
+        resultado.textContent = '⚠️ Escribe un número.';
+        resultado.className = 'resultado incorrecto';
+        return;
+      }
+
+      const respuesta = parseInt(val);
+      if (respuesta === window.sumaResultado) {
+        resultado.textContent = '¡Correcto! 🎉 ¡Lo hiciste genial!';
+        resultado.className = 'resultado correcto';
+        estado.puntos++;
+        document.getElementById('puntos').textContent = estado.puntos;
+        subirNivel();
+        guardarEstado();
+        confetti({ particleCount: 50, spread: 160 });
+      } else {
+        resultado.textContent = `Incorrecto. La respuesta es ${window.sumaResultado}.`;
+        resultado.className = 'resultado incorrecto';
+      }
+    };
+
+    // --- RESTA ---
+    window.generarResta = function () {
+      estado.pokemonActual = elegirPokemon();
+      let a, b;
+      do {
+        a = generarNumero();
+        b = Math.floor(Math.random() * a);
+      } while (a - b < 0);
+
+      window.restaResultado = a - b;
+
+      document.getElementById('pregunta-resta').innerHTML = `
+        <div class="tabla-matematica">
+          <div class="fila-labels">
+            <div>Centenas</div>
+            <div>Decenas</div>
+            <div>Unidades</div>
+          </div>
+          <div id="fila-minuendo"></div>
+          <div class="operador">−</div>
+          <div id="fila-sustraendo"></div>
+          <div class="separador"></div>
+        </div>
+      `;
+
+      renderFila('fila-minuendo', a);
+      renderFila('fila-sustraendo', b);
+
+      document.getElementById('respuesta-resta').value = '';
+      document.getElementById('resultado-resta').textContent = '';
+    };
+
+    window.verificarResta = function () {
+      const input = document.getElementById('respuesta-resta');
+      const resultado = document.getElementById('resultado-resta');
+      const val = input.value.trim();
+
+      if (!val || isNaN(val)) {
+        resultado.textContent = '⚠️ Escribe un número.';
+        resultado.className = 'resultado incorrecto';
+        return;
+      }
+
+      const respuesta = parseInt(val);
+      if (respuesta === window.restaResultado) {
+        resultado.textContent = '¡Correcto! 🎉 ¡Lo lograste!';
+        resultado.className = 'resultado correcto';
+        estado.puntos++;
+        document.getElementById('puntos').textContent = estado.puntos;
+        subirNivel();
+        guardarEstado();
+        confetti({ particleCount: 50, spread: 160 });
+      } else {
+        resultado.textContent = `Incorrecto. La respuesta es ${window.restaResultado}.`;
+        resultado.className = 'resultado incorrecto';
+      }
+    };
+
+    // --- MULTIPLICACIÓN ---
+    window.generarMultiplicacion = function () {
+      estado.pokemonActual = elegirPokemon();
+      const a = Math.floor(Math.random() * 12) + 1;
+      const b = Math.floor(Math.random() * 12) + 1;
+      window.productoResultado = a * b;
+
+      document.getElementById('pregunta-multiplicacion').innerHTML = `
+        <div class="tabla-matematica">
+          <div class="fila-labels">
+            <div>Factor 1</div>
+            <div></div>
+            <div>Factor 2</div>
+          </div>
+          <div id="fila-factor1"></div>
+          <div class="operador">×</div>
+          <div id="fila-factor2"></div>
+          <div class="separador"></div>
+        </div>
+      `;
+
+      renderFila('fila-factor1', a);
+      renderFila('fila-factor2', b);
+
+      document.getElementById('respuesta-multiplicacion').value = '';
+      document.getElementById('resultado-multiplicacion').textContent = '';
+    };
+
+    window.verificarMultiplicacion = function () {
+      const input = document.getElementById('respuesta-multiplicacion');
+      const resultado = document.getElementById('resultado-multiplicacion');
+      const val = input.value.trim();
+
+      if (!val || isNaN(val)) {
+        resultado.textContent = '⚠️ Escribe un número.';
+        resultado.className = 'resultado incorrecto';
+        return;
+      }
+
+      const respuesta = parseInt(val);
+      if (respuesta === window.productoResultado) {
+        resultado.textContent = '¡Correcto! 🎉 ¡Eres un genio!';
+        resultado.className = 'resultado correcto';
+        estado.puntos++;
+        document.getElementById('puntos').textContent = estado.puntos;
+        subirNivel();
+        guardarEstado();
+        confetti({ particleCount: 60, spread: 180 });
+      } else {
+        resultado.textContent = `Incorrecto. La respuesta es ${window.productoResultado}.`;
+        resultado.className = 'resultado incorrecto';
+      }
+    };
+
+    // Solo permite números
+    document.addEventListener('input', (e) => {
+      if (e.target.matches('#respuesta-suma, #respuesta-resta, #respuesta-multiplicacion')) {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+      }
+    });
+
+    // Iniciar
+    document.addEventListener('DOMContentLoaded', () => {
+      cargarEstado();
+      generarSuma();
+      generarResta();
+      generarMultiplicacion();
+    });
+
+  </script>
+
 </body>
 </html>

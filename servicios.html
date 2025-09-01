@@ -5,54 +5,53 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Servicios Carrusel 3D + Flip Card + Modal</title>
    <link rel="stylesheet" href="style.css">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+   
   <style>
 
-    :root { /* Declara variables globales que pueden ser usadas en todos los archivos. Afecta a todos los archivos HTML. */
-  --primary: #b39ddb; /* Define el color primario. Afecta a todos los archivos HTML. */
-  --secondary: #f8bbd0; /* Define el color secundario. Afecta a todos los archivos HTML. */
-  --accent: #80deea; /* Define el color de acento. Afecta a todos los archivos HTML. */
-  --light-bg: #fffefb; /* Define el color de fondo claro. Afecta a `body` y `main` en `index.html`, `blog.html`, `about.html`, `puzzle.html`, `servicios.html` y `contacto.html`. */
-  --dark-text: #424242; /* Define el color de texto oscuro. Afecta a todos los archivos HTML con texto principal. */
-  --purple-light: #ede7f6; /* Define un color púrpura claro. Afecta a `.team-member`, `.contacto-wrapper` en `contacto.html`, y los botones de voto en `index.html`. */
-  --pink-light: #fce4ec; /* Define un color rosa claro. Afecta a los enlaces del navbar al pasar el mouse. */
-  --blue-light: #e1f5fe; /* Define un color azul claro. No se usa directamente en los archivos proporcionados. */
-  --shadow-light: rgba(0, 0, 0, 0.08); /* Define una sombra ligera. Se utiliza en el input de búsqueda de `pokecomp.html`. */
-  --footer-bg: #7e57c2; /* Define el color de fondo del pie de página. Afecta a `footer.html` y al navbar. */
-  --footer-text-color: #ffffff; /* Define el color del texto del pie de página. Afecta a `footer.html` y al navbar. */
-  --footer-link-color: #f8bbd0; /* Define el color de los enlaces del pie de página. Afecta a `footer.html`. */
-  --card-border-radius: 15px; /* Define el radio de borde de las tarjetas. Afecta a la mayoría de los contenedores y tarjetas. */
-  --form-input-border: #d1c4e9; /* Define el color del borde de los formularios. Afecta a los formularios de `contacto.html` y `comentario.html`. */
-  --form-input-focus: #80deea; /* Define el color del borde de los formularios al enfocarlos. Afecta a los formularios de `contacto.html` y `comentario.html`. */
-  --font-family-base: 'Comic Sans MS', cursive, sans-serif; /* Define la tipografía base. Afecta a todos los archivos HTML. */
-  --header-bg: linear-gradient(90deg, var(--secondary), var(--primary), var(--accent), var(--secondary)); /* Define el fondo del encabezado. Afecta al `header`. */
-  --transition-duration: 0.3s; /* Define la duración de las transiciones. Afecta a la mayoría de los elementos interactivos. */
-  --shadow-card-hover: 0 20px 45px rgba(0, 0, 0, 0.45), 0 12px 18px rgba(0, 0, 0, 0.38), 12px 0 0 0 rgba(0, 0, 0, 0.5); /* Define la sombra de las tarjetas al pasar el mouse. Afecta a `.cuento`, `.about-section .banner-carrusel` y `.pagina-compra .cuento`. */
-  --shadow-card: 0 15px 30px rgba(0, 0, 0, 0.35), 0 8px 12px rgba(0, 0, 0, 0.30), 8px 0 0 0 rgba(0, 0, 0, 0.4); /* Define la sombra de las tarjetas. Afecta a la mayoría de los contenedores y tarjetas. */
-}
     :root{
-
-  
       --secondary-color: #fff;
-      --accent-color: #f8bbd0;
+      --accent-color: #FFD166; /* Amarillo dorado */
       --background-dark: #121212;
       --text-light: #f5f5f5;
       --box-shadow: 0 10px 30px rgba(0,0,0,.3);
       --border-radius: 20px;
     }
 
+    
+
     main {
       flex-grow: 1;
-      display: grid;
+      display: flex;
       justify-content: center;
       align-items: center;
       position: relative;
       perspective: 2000px;
-      padding: 80px;
+      padding: 350px;
+      overflow: hidden;
+      object-fit: contain;
     }
+
+    .mensaje-inicial {
+  text-align: center;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 2px dashed #FFB7B2;
+  color: #333;
+  font-family: 'Comic Neue', cursive;
+  line-height: 1.8;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
 
     .carousel-wrapper {
       position: relative;
@@ -237,30 +236,38 @@
     /* Media Query para pantallas pequeñas (rotación vertical) */
     /* MEDIA QUERY para móviles */
 @media (max-width: 768px) {
-  .carrusel-3d-container {
-    display: none; /* Oculta el carrusel 3D */
-  }
   .mobile-cards {
     display: flex; /* Muestra el nuevo diseño para móviles */
   }
+  
 }
+
   </style>
 </head>
 <body>
   <header class="hero-section">
      <div class="watermark-container">
-      <h1 id="titulo-arcoiris">Servicios que orbitan a tu alrededor</h1>
-      <img src="img/" alt="Marca de agua" class="watermark" id="watermark" width="15%">
+      <h1 id="titulo-arcoiris">¡Bienvenidos al Reino de las Historias Mágicas! ✨</h1>
+      <img src="img/geminilogo.PNG" alt="Marca de agua" class="watermark" id="watermark" width="15%">
     </div>
   </header>
    <canvas id="universo"></canvas>
   <div id="navbar-container"></div>
+  <div class="mensaje-inicial">
+  <p class="texto-bienvenida">
+    <span class="animacion-gusanito">🌟</span>
+    Este es el <span class="resaltar-magico">Reino de las Historias Mágicas</span>,<br>
+    donde tu imaginación es la llave.<br>
+    ¡Prepárate para descubrir un mundo de cuentos secretos y llenos de encanto!  ✨
+  </p>
+</div>
+<h2>Descubre de nuestros Servicios </h2>
   <main class="pagina-ser3d-main">
     <div class="carousel-wrapper" aria-live="polite">
       <div class="flip-card-container" data-index="0">
         <div class="flip-inner is-flipped">
           <div class="card-face front">
-            <img src="img/audiocuentos.jpg" alt="Cuentos personalizados" class="card-image" />
+            <img src="img/Milley123.png" alt="Cuentos personalizados" class="card-image" />
             <div style="padding:20px;">
               <h3>Cuentos personalizados</h3>
               <button class="button flip-btn">Ver detalle</button>
@@ -271,7 +278,7 @@
             <div class="icon">📖</div>
             <button class="button modal-btn"
                     data-title="Cuentos personalizados"
-                    data-image="https://cdn.pixabay.com/photo/2016/11/29/11/48/child-1869389_1280.jpg"
+                    data-image="img/Varios.png"
                     data-content="Nuestros cuentos personalizados son una aventura única para cada niño. Tú nos das los datos de tu pequeño héroe: su nombre, su personaje favorito, sus amigos y hasta su mascota. Nosotros creamos una historia inolvidable donde él o ella es el protagonista. ¡La magia de la lectura cobra vida en cada página!">Más detalles</button>
           </div>
         </div>
@@ -291,7 +298,7 @@
             <p>Llevamos la magia a tu evento con narradores profesionales y juegos interactivos.</p>
             <button class="button modal-btn"
                     data-title="Cuentacuentos en vivo"
-                    data-image="https://cdn.pixabay.com/photo/2023/06/17/14/03/woman-8070233_1280.jpg"
+                    data-image="img/Logo4"
                     data-content="Transformamos cualquier celebración en un reino de fantasía. Nuestros narradores profesionales, con años de experiencia, cautivarán a niños y adultos por igual. La función incluye música, marionetas y juegos interactivos que aseguran un evento lleno de risas y momentos memorables.">Más detalles</button>
           </div>
         </div>
@@ -320,7 +327,7 @@
       <div class="flip-card-container" data-index="3">
         <div class="flip-inner is-flipped">
           <div class="card-face front">
-            <img src="img/25ce4f0a-92fe-438b-966e-29b04eb58739 (1).jpg" alt="Ilustraciones digitales" class="card-image" />
+            <img src="img/animalesbv.png" alt="Ilustraciones digitales" class="card-image" />
             <div style="padding:20px;">
               <h3>Ilustraciones digitales</h3>
               <button class="button flip-btn">Ver detalle</button>
@@ -331,7 +338,7 @@
             <p>Ilustraciones personalizadas de tu familia o tus mascotas al estilo de los cuentos de hadas.</p>
             <button class="button modal-btn"
                     data-title="Ilustraciones digitales"
-                    data-image="https://cdn.pixabay.com/photo/2016/12/15/12/26/man-1908253_1280.jpg"
+                    data-image="img/magia"
                     data-content="Capturamos la esencia de tu familia o tus queridas mascotas en hermosas ilustraciones digitales. Cada obra de arte es única y puede ser usada para decorar el cuarto de los niños, como regalo especial o para imprimir en un libro de cuentos. Un recuerdo que durará para siempre.">Más detalles</button>
           </div>
         </div>
@@ -351,7 +358,7 @@
             <div class="icon">🎥</div>
             <button class="button modal-btn"
                     data-title="Animación 3D"
-                    data-image="https://cdn.pixabay.com/photo/2017/08/07/11/40/3d-2602123_1280.jpg"
+                    data-image="img/animalesbv.png"
                     data-content="Nuestro equipo de animadores 3D da vida a cualquier concepto. Desde la creación de personajes animados para videos musicales, hasta la visualización de productos para campañas de marketing. Ofrecemos animaciones detalladas y de alta calidad para cualquier proyecto.">Más detalles</button>
           </div>
         </div>
@@ -360,7 +367,7 @@
       <div class="flip-card-container" data-index="5">
         <div class="flip-inner is-flipped">
           <div class="card-face front">
-            <img src="img/adorable-cartoon-animals-kawaii-style-cute-wildlife-illustrations_845967-506.jpg" alt="Podcast infantil" class="card-image" />
+            <img src="img/pantalla.png" alt="Podcast infantil" class="card-image" />
             <div style="padding:20px;">
               <h3>Podcast infantil</h3>
               <button class="button flip-btn">Ver detalle</button>
@@ -371,7 +378,7 @@
             <p>Creamos y producimos podcasts educativos y divertidos para niños de todas las edades.</p>
             <button class="button modal-btn"
                     data-title="Podcast infantil"
-                    data-image="https://cdn.pixabay.com/photo/2015/09/01/18/43/podcast-917409_1280.jpg"
+                    data-image="img/pantalla.png"
                     data-content="Conviértete en un narrador de historias con nuestros servicios de producción de podcasts. Te ayudamos a grabar, editar y publicar tu propio programa, con efectos de sonido, música original y una calidad de audio profesional. Ideal para marcas, educadores o creadores de contenido.">Más detalles</button>
           </div>
         </div>

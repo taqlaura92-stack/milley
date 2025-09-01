@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testimonios de Milley y sus amigos</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <style>
+    /* VARIABLES DE COLORES MODIFICADAS */
+    :root {
+      --background-dark: #2a2a2a;
+      --text-light: #f5f5f5;
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+      --border-radius: 20px;
+      --primary: #b39ddb; /* Define el color primario. Afecta a todos los archivos HTML. */
+  --secondary: #f8bbd0; /* Define el color secundario. Afecta a todos los archivos HTML. */
+  --accent: #80deea; /* Define el color de acento. Afecta a todos los archivos HTML. */
+    }
+
+    main {
+      flex-grow: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      perspective: 1000px;
+      padding: 350px;
+      overflow: hidden;
+    }
+
+    .mensaje-inicial {
+      text-align: center;
+      max-width: 800px;
+      margin: 40px auto;
+      padding: 30px;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      border: 2px dashed #F8B195;
+      color: var(--dark-text);
+      font-family: 'Comic Neue', cursive;
+      line-height: 1.8;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .carousel-wrapper {
+      position: relative;
+      width: 350px;
+      height: 300px;
+      transform-style: preserve-3d;
+      opacity: 0;
+     
+    }
+    
+    .carousel-wrapper::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 80%;
+      height: 80%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192, 108, 132, 0.3) 0%, rgba(255, 238, 0, 0) 50%);
+      transform: translate(-50%,-50%) rotateX(90deg) translateZ(-100px);
+      pointer-events: none;
+      z-index: -1;
+      box-shadow: 0 0 100px 20px rgba(192, 108, 132, 0.278)
+    }
+
+    .flip-card-container {
+      position: absolute;
+      width: 300px;
+      height: 400px;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      opacity: 0;
+       border: solid black 2px;
+    }
+
+    .flip-inner {
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform .8s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    .flip-inner.is-flipped {
+      transform: rotateY(180deg);
+    }
+
+    .card-face {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      overflow: hidden;
+      background-color: var(--secondary-color);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      border: black 2px solid;
+    }
+
+    .card-face.back {
+      transform: rotateY(180deg);
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary));
+      color: var(--background-dark);
+    }
+    
+    .card-face img {
+      width: 80%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+
+    .card-face h3 {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: var(--background-dark);
+      margin: 20px 10px 10px;
+    }
+
+    .card-face p {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: var(--accent);
+      color: var(--accent-color);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 50px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: transform .2s ease, background-color .3s ease;
+      position: relative;
+      z-index: 10;
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      background-color: #000;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      inset: 0;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, .7);
+      backdrop-filter: blur(5px);
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity .3s ease-in-out;
+    }
+
+    .modal.is-visible {
+      display: flex;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background-color: #2a2a2a;
+      color: var(--text-light);
+      margin: auto;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, .5);
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+      transform: scale(.9);
+      transition: transform .3s ease-in-out;
+    }
+
+    .modal.is-visible .modal-content {
+      transform: scale(1);
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #444;
+      padding-bottom: 15px;
+      margin-bottom: 20px;
+    }
+
+    .modal-header h2 {
+      margin: 0;
+      font-size: 2rem;
+      color: var(--accent-color);
+    }
+
+    .modal-close-btn {
+      color: var(--text-light);
+      font-size: 2rem;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: none;
+      padding: 0;
+    }
+
+    .modal-body img {
+      width: 100%;
+      height: auto;
+      max-height: 300px;
+      object-fit: cover;
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="hero-section">
+    <div class="watermark-container">
+      <h1 id="titulo-arcoiris">¡Lo que dicen de nosotros!</h1>
+      <img src="img/Logo4.PNG" alt="Marca de agua" class="watermark" id="watermark" width="10%">
+    </div>
+  </header>
+  
+  <div id="navbar-container"></div>
+  
+  <h2>Testimonios de nuestros héroes</h2>
+    <div class="mensaje-inicial">
+    <p class="texto-bienvenida">
+      <span class="animacion-gusanito">🌟</span>
+      Nuestros amigos peludos y mágicos tienen algo que contarte.<br>
+      ¡Escucha sus aventuras y descubre la magia que hemos creado juntos! ✨
+    </p>
+  </div>
+  
+  <main class="pagina-ser3d-main">
+    <div class="carousel-wrapper" aria-live="polite">
+      
+      <div class="flip-card-container" data-index="0">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/milley.jpg" alt="Milley" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Milley, la perrita dormilona</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <p>"Me encanta que mi humana me deje usar su computadora para ver estos cuentos. Aunque siempre termino roncando a los 5 minutos..."</p>
+            <div class="icon">🐾</div>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Milley"
+                    data-image="img/milley.jpg"
+                    data-content="Me encanta que mi humana me deje usar su computadora para ver estos cuentos. ¡Aunque siempre termino roncando a los 5 minutos! Mi parte favorita es cuando salen otros perritos... ¡o cuando huele a galletas cerca de la pantalla!">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip-card-container" data-index="1">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/siul.jpg" alt="Charlie" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Charlie, el conejo sabio</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🥕</div>
+            <p>"¡Finalmente un sitio web que no tiene un molesto gato como protagonista! El contenido está genial..."</p>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Charlie"
+                    data-image="img/charlie.jpg"
+                    data-content="¡Finalmente un sitio web que no tiene un molesto gato como protagonista! El contenido está genial, y los tutoriales me ayudaron a entender por qué los humanos se emocionan con las pelotas. Aunque sigo pensando que las zanahorias son superiores.">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="2">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/kraftdestruccion.jpg" alt="Kraft" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Kraft, el robot que aún no destruye</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <p>"Como robot destructor, pensé que este sitio sería aburrido. Pero ¡no! Sus historias son tan emocionantes que casi me olvido de mi misión..."</p>
+            <div class="icon">🤖</div>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Kraft"
+                    data-image="img/kraftdestruccion.jpg"
+                    data-content="Como robot destructor, pensé que este sitio sería aburrido. Pero ¡no! Sus historias son tan emocionantes que casi me olvido de mi misión de dominar el mundo. Casi. Mis sensores detectan un alto nivel de 'ternura' en estas páginas.">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="3">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/blackgor.jpg" alt="Blackdark" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Blackdark, el dragón con un corazón de oro</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🐉</div>
+            <p>"Vine por el nombre y me quedé por la magia. Blackdark aprueba este sitio. No le digan a mi mamá que me gusta leer cuentos..."</p>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Blackdark"
+                    data-image="img/blackgor.jpg"
+                    data-content="Vine por el nombre y me quedé por la magia. Blackdark aprueba este sitio. No le digan a mi mamá que me gusta leer cuentos, por favor. Especialmente los de princesas y caballeros... ¡pero shhh!">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="flip-card-container" data-index="4">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/5 perrosleyendo.jpg" alt="Pipo el Erizo" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Pipo, el erizo curioso</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🦔</div>
+            <p>"Me gusta que los cuentos tengan tanta aventura, ¡me hace querer salir a explorar el jardín y buscar nuevos amigos!"</p>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Pipo"
+                    data-image="img/5 perrosleyendo.jpg"
+                    data-content="Desde que descubrí este sitio, ya no tengo miedo de la oscuridad. Cada historia me enseña algo nuevo y me da el valor para enfrentar mis miedos. ¡Ahora soy el erizo más valiente del barrio!">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="5">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/geminilogo.PNG" alt="Luna el Gato" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Luna, el gato místico</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🐈‍⬛</div>
+            <p>"Mi humano siempre me lee los cuentos antes de dormir. Me ayudan a soñar con lunas de queso y estrellas de atún."</p>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Luna"
+                    data-image="img/geminilogo.PNG"
+                    data-content="Soy un gato de pocas palabras, pero este sitio me ha robado el corazón (y un par de siestas). Mi humano me lee los cuentos antes de dormir y ahora mis sueños están llenos de aventuras con ratones que hablan y lunas de queso.">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card-container" data-index="6">
+        <div class="flip-inner">
+          <div class="card-face front">
+            <img src="img/pi.jpg" alt="Sparky el Hámster" class="card-image" />
+            <div style="padding:20px;">
+              <h3>Sparky, el Hámster veloz</h3>
+            </div>
+          </div>
+          <div class="card-face back">
+            <div class="icon">🐹</div>
+            <p>"¡Rueda, rueda, lee, rueda! Entre cada carrera en mi rueda, me asomo a la pantalla para leer un cuento."</p>
+            <button class="button modal-btn"
+                    data-title="Testimonio de Sparky"
+                    data-image="img/pi.jpg"
+                    data-content="Entre cada carrera en mi rueda, me asomo a la pantalla para leer un cuento. ¡Son tan adictivos! Me dan la energía para seguir corriendo y luego volver a leer. ¡Es un ciclo perfecto! Cinco estrellas a este sitio web.">Ver testimonio</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div id="serviceModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true" tabindex="-1">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle">Título del Servicio</h2>
+        <button class="modal-close-btn" aria-label="Cerrar modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <img id="modalImage" src="" alt="Imagen del servicio" />
+        <p id="modalDescription">Descripción del servicio.</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="footer-container"></div>
+    <canvas id="corazon" class="fondo-corazones"></canvas>
+>
+    <script src="corazones.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
